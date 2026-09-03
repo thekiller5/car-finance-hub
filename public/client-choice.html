@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>בחירת מסלול רכישה - מימון רכבים</title>
+    <!-- טעינת Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 font-sans">
+
+    <div class="max-w-xl mx-auto my-10 bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+        
+        <!-- כותרת ראשית -->
+        <div class="text-center mb-8">
+            <span class="text-xs bg-blue-100 text-blue-800 font-semibold px-3 py-1 rounded-full">אוטו סנטר הצפון</span>
+            <h1 class="text-2xl font-bold text-gray-800 mt-3">בחר את מסלול ההתקדמות שלך</h1>
+            <p class="text-gray-500 text-sm mt-1">רכב בחרת: <span class="font-bold text-blue-600">מאזדה 3 - 2022 (75,000 ₪)</span></p>
+        </div>
+
+        <!-- בחירת מסלול: קנייה או החלפה -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            
+            <!-- כפתור קנייה -->
+            <div onclick="selectPath('buy')" id="buyCard" class="cursor-pointer border-2 border-blue-500 bg-blue-50/50 p-6 rounded-2xl text-center transition hover:shadow-md">
+                <div class="text-blue-600 text-3xl mb-3"><i class="fa-solid fa-car-burst"></i></div>
+                <h3 class="font-bold text-gray-800 text-lg">קניית רכב חדש</h3>
+                <p class="text-gray-500 text-xs mt-1">בדיקת מימון ותשלום עבור הרכב שנבחר</p>
+            </div>
+
+            <!-- כפתור החלפה (טרייד-אין) -->
+            <div onclick="selectPath('trade')" id="tradeCard" class="cursor-pointer border-2 border-gray-200 bg-white p-6 rounded-2xl text-center transition hover:shadow-md hover:border-gray-300">
+                <div class="text-green-600 text-3xl mb-3"><i class="fa-solid fa-rotate"></i></div>
+                <h3 class="font-bold text-gray-800 text-lg">החלפת רכב (טרייד-אין)</h3>
+                <p class="text-gray-500 text-xs mt-1">קניית הרכב החדש ומכירת הרכב הישן שלך</p>
+            </div>
+
+        </div>
+
+        <!-- טופס דינמי שישתנה לפי הבחירה -->
+        <form id="actionForm" class="space-y-4">
+            
+            <!-- שדות למילוי פרטי הרכב הישן, תמונתו ורישיון הרכב (יופיעו רק בטרייד-אין) -->
+            <div id="tradeInSection" class="hidden space-y-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                <h4 class="font-bold text-gray-700 text-sm"><i class="fa-solid fa-info-circle ml-1"></i> פרטי הרכב הישן שלך לטרייד-אין</h4>
+                
+                <div class="grid grid-cols-2 gap-3">
+                    <input type="text" placeholder="יצרן ודגם (למשל: טויוטה קורולה)" class="w-full px-3 py-2 border rounded-lg text-sm bg-white">
+                    <input type="number" placeholder="שנת ייצור" class="w-full px-3 py-2 border rounded-lg text-sm bg-white">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-3">
+                    <input type="number" placeholder="קילומטראז'" class="w-full px-3 py-2 border rounded-lg text-sm bg-white">
+                    <input type="text" placeholder="מצב הרכב (למשל: מצוין)" class="w-full px-3 py-2 border rounded-lg text-sm bg-white">
+                </div>
+
+                <!-- שדה העלאת/צילום תמונת הרכב הישן -->
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">צלם או העלה תמונה של הרכב הישן</label>
+                    <input type="file" accept="image/*" capture="environment" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 bg-white border rounded-lg">
+                </div>
+
+                <!-- שדה העלאת/צילום רישיון הרכב -->
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 mb-1"><i class="fa-solid fa-file-lines ml-1"></i> צלם או העלה את רישיון הרכב</label>
+                    <input type="file" accept="image/*" capture="environment" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 bg-white border rounded-lg">
+                    <p class="text-[10px] text-gray-400 mt-1">צילום ברור של רישיון הרכב יסייע בהערכת שווי מהירה</p>
+                </div>
+            </div>
+
+            <!-- שדות משותפים: צילום ת.ז וחתימה -->
+            <div class="pt-4 border-t">
+                <label class="block text-sm font-medium text-gray-700 mb-1">מספר תעודת זהות</label>
+                <input type="text" required class="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="הקלד 9 ספרות">
+            </div>
+
+            <div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl transition duration-200 shadow-md">
+                    המשך לחתימה דיגיטלית ובדיקת מימון
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+    <script>
+        function selectPath(path) {
+            const buyCard = document.getElementById('buyCard');
+            const tradeCard = document.getElementById('tradeCard');
+            const tradeInSection = document.getElementById('tradeInSection');
+
+            if (path === 'buy') {
+                buyCard.className = "cursor-pointer border-2 border-blue-500 bg-blue-50/50 p-6 rounded-2xl text-center transition hover:shadow-md";
+                tradeCard.className = "cursor-pointer border-2 border-gray-200 bg-white p-6 rounded-2xl text-center transition hover:shadow-md hover:border-gray-300";
+                tradeInSection.classList.add('hidden');
+            } else {
+                tradeCard.className = "cursor-pointer border-2 border-green-500 bg-green-50/50 p-6 rounded-2xl text-center transition hover:shadow-md";
+                buyCard.className = "cursor-pointer border-2 border-gray-200 bg-white p-6 rounded-2xl text-center transition hover:shadow-md hover:border-gray-300";
+                tradeInSection.classList.remove('hidden');
+            }
+        }
+
+        document.getElementById('actionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('הפרטים, תמונת הרכב ורישיון הרכב נקלטו! מעביר לחתימה דיגיטלית והרצת בדיקת אשראי מול גוף המימון...');
+        });
+    </script>
+
+</body>
+</html>
